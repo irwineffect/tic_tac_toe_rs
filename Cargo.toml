@@ -1,0 +1,7 @@
+[package]
+name = "tic_tac_toe_rs"
+version = "0.1.0"
+authors = ["James Irwin <irwineffect@gmail.com>"]
+edition = "2018"
+
+[dependencies]
