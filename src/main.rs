@@ -33,6 +33,7 @@ fn valid_move(board: &[char], player_move: i8) -> bool {
 }
 
 #[derive(PartialEq)]
+#[derive(Debug)]
 enum GAME_STATE {
     IN_PROGRESS,
     PLAYER_1_WINS,
@@ -42,7 +43,50 @@ enum GAME_STATE {
 
 // TODO: need to properly check for game over condition
 fn game_over(board: &[char]) -> GAME_STATE {
-    GAME_STATE::IN_PROGRESS
+    // Check if player 1 has won
+    if board[0] == 'X' && board[1] == 'X' && board[2] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[3] == 'X' && board[4] == 'X' && board[5] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[6] == 'X' && board[7] == 'X' && board[8] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[0] == 'X' && board[3] == 'X' && board[6] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[1] == 'X' && board[4] == 'X' && board[7] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[2] == 'X' && board[5] == 'X' && board[8] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[0] == 'X' && board[4] == 'X' && board[8] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    } else if board[2] == 'X' && board[4] == 'X' && board[6] == 'X' {
+        return GAME_STATE::PLAYER_1_WINS;
+    }
+    // Check if player 2 has won
+    else if board[0] == 'Y' && board[1] == 'Y' && board[2] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[3] == 'Y' && board[4] == 'Y' && board[5] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[6] == 'Y' && board[7] == 'Y' && board[8] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[0] == 'Y' && board[3] == 'Y' && board[6] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[1] == 'Y' && board[4] == 'Y' && board[7] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[2] == 'Y' && board[5] == 'Y' && board[8] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[0] == 'Y' && board[4] == 'Y' && board[8] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else if board[2] == 'Y' && board[4] == 'Y' && board[6] == 'Y' {
+        return GAME_STATE::PLAYER_2_WINS;
+    } else {
+        // Check if the game is not a STALE_MATE
+        for i in 0 .. 9 {
+            if ((board[i as usize] as u8) - ('0' as u8)) < 10 {
+                return GAME_STATE::IN_PROGRESS;
+            }
+        }
+    }
+    return GAME_STATE::STALE_MATE;
 }
 
 fn main() {
@@ -74,4 +118,6 @@ fn main() {
         game_state =  game_over(&board);
         player_selector = !player_selector;
     };
+    draw_board(&board);
+    println!("{:?}", game_state);
 }
